@@ -39,5 +39,10 @@ The example project does broad-phase boolean checking and a narrow-phase calcula
 
 The main focus was to create as little temporary objects as possible. This resulted in the current selection of operators of the Vector2D and Polygon classes.
 
+## Lua
+The lua folder contains the previous version of this code written in Lua. It works, but I do not recommend using it for performance reasons. It will use ~50% CPU with only a handful of objects colliding.
+
+The upsides of the lua module are compatibility to the playdate.geometry.vector2D class and not having to compile C code (i.e. single debugger, no C toolchain, etc.)
+
 ## Contributing
 This library is in active development, so things might change/shift/improve. Please feel welcome to add issues or pull requests.
