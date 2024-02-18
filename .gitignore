@@ -1,0 +1,6 @@
+.sentry-native
+/example/*.pdx/
+/example/build*/
+/example/Source/pdex.dll
+/example/Source/pdex.elf
+/media/*
