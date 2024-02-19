@@ -135,13 +135,24 @@ static int lua_vector2d_newindex(lua_State *L)
 	return 0;
 }
 
+static int lua_vector2d_print(lua_State *L)
+{
+ //   Vector2D* v = pd->lua->getArgObject(1, VECTOR_TYPE_NAME, NULL);
+
+ //   char result[64] = "";
+ //   vector2D_print(result, sizeof(result), *v);
+
+ //   pd->lua->pushString(result);
+	//return 1;
+	return 0;
+}
+
 static int lua_vector2d_unpack(lua_State *L)
 {
 	Vector2D* v = pd->lua->getArgObject(1, VECTOR_TYPE_NAME, NULL);
 
 	pd->lua->pushFloat(v->x);
 	pd->lua->pushFloat(v->y);
-
 	return 2;
 }
 
@@ -177,16 +188,15 @@ static int lua_vector2d_normalize(lua_State *L)
 	return 0;
 }
 
-static int lua_vector2d_print(lua_State *L)
+static int lua_vector2d_dotProduct(lua_State *L)
 {
- //   Vector2D* v = pd->lua->getArgObject(1, VECTOR_TYPE_NAME, NULL);
+	Vector2D* a = pd->lua->getArgObject(1, VECTOR_TYPE_NAME, NULL);
+	Vector2D* b = pd->lua->getArgObject(2, VECTOR_TYPE_NAME, NULL);
 
- //   char result[64] = "";
- //   vector2D_print(result, sizeof(result), *v);
+	float res = vector2D_dotProduct(*a, *b);
 
- //   pd->lua->pushString(result);
-	//return 1;
-	return 0;
+	pd->lua->pushFloat(res);
+	return 1;
 }
 
 // --- END LUA HOOKS ---
@@ -201,6 +211,7 @@ static const lua_reg vector2Dlib[] =
 	{ "unpack",		lua_vector2d_unpack },
 	{ "addScaled",	lua_vector2d_addScaled },
 	{ "normalize",	lua_vector2d_normalize },
+	{ "dotProduct",	lua_vector2d_dotProduct },
 	{ NULL, NULL }
 };
 

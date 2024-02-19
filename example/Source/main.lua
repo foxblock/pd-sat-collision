@@ -43,10 +43,6 @@ local function drawV2DListAsPoly(list)
     end
 end
 
-local function dotProduct(va, vb)
-    return va.x * vb.x + va.y * vb. y
-end
-
 local function render()
     gfx.clear(gfx.kColorWhite)
 
@@ -93,7 +89,7 @@ function playdate.update()
             positions[k]:addScaled(colNormal, depth / 2)
 
             local velDiff = v2d.new(velocities[i].x - velocities[k].x, velocities[i].y - velocities[k].y)
-            local relSpeed = dotProduct(velDiff, colNormal)
+            local relSpeed = colNormal:dotProduct(velDiff)
             velocities[i]:addScaled(colNormal, -relSpeed)
             velocities[k]:addScaled(colNormal, relSpeed)
 
@@ -107,7 +103,7 @@ function playdate.update()
         if colNormal ~= nil then
             positions[i]:addScaled(colNormal, -depth)
 
-            local dp = dotProduct(velocities[i], colNormal)
+            local dp = colNormal:dotProduct(velocities[i])
             velocities[i]:addScaled(colNormal, -2 * dp)
         end
 
