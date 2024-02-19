@@ -11,6 +11,9 @@ static inline float square(float v)
 void vector2D_normalize(Vector2D *v)
 {
     float len = vector2D_length(*v);
+	if (len == 0)
+		return;
+
     v->x /= len;
     v->y /= len;
 }
@@ -32,6 +35,8 @@ void vector2D_rightNormal(Vector2D *target, Vector2D src)
 void vector2D_dirNormalized(Vector2D *target, Vector2D pa, Vector2D pb)
 {
     float len = sqrtf(square(pa.x - pb.x) + square(pa.y - pb.y));
+	if (len == 0)
+		len = 1.0f;
     target->x = (pa.x - pb.x) / len;
     target->y = (pa.y - pb.y) / len;
 }

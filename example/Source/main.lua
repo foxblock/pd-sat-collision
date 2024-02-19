@@ -30,6 +30,7 @@ local bigPoly = poly.new(
     160, 75
 )
 local polyMiddle, polyRadius = bigPoly:getBoundingCircle()
+bigPoly:cacheNormals()
 
 
 -- list is array of Vector2d structs

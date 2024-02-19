@@ -100,12 +100,19 @@ int collision_polyPoly_check(Polygon polyA, Polygon polyB)
 
     for (int i = 0; i < polyA.count; ++i)
     {
-        polyEdge(&edge, polyA, i);
+        if (polyA.normals == NULL)
+        {
+            polyEdge(&edge, polyA, i);
 
-        if (edge.x == 0 && edge.y == 0)
-            continue;
+            if (edge.x == 0 && edge.y == 0)
+                continue;
 
-        vector2D_leftNormal(&axis, edge);
+            vector2D_leftNormal(&axis, edge);
+        }
+        else
+        {
+            axis = polyA.normals[i];
+        }
         
         projectPoly(&minA, &maxA, polyA, axis);
         projectPoly(&minB, &maxB, polyB, axis);
@@ -115,12 +122,19 @@ int collision_polyPoly_check(Polygon polyA, Polygon polyB)
     }
     for (int i = 0; i < polyB.count; ++i)
     {
-        polyEdge(&edge, polyB, i);
+        if (polyB.normals == NULL)
+        {
+            polyEdge(&edge, polyB, i);
 
-        if (edge.x == 0 && edge.y == 0)
-            continue;
+            if (edge.x == 0 && edge.y == 0)
+                continue;
 
-        vector2D_leftNormal(&axis, edge);
+            vector2D_leftNormal(&axis, edge);
+        }
+        else
+        {
+            axis = polyB.normals[i];
+        }
         
         projectPoly(&minA, &maxA, polyA, axis);
         projectPoly(&minB, &maxB, polyB, axis);
@@ -142,13 +156,20 @@ int collision_polyPoly(Vector2D *resolveDir, float *depth, Polygon polyA, Polygo
 
     for (int i = 0; i < polyA.count; ++i)
     {
-        polyEdge(&edge, polyA, i);
+        if (polyA.normals == NULL)
+        {
+            polyEdge(&edge, polyA, i);
 
-        if (edge.x == 0 && edge.y == 0)
-            continue;
+            if (edge.x == 0 && edge.y == 0)
+                continue;
 
-        vector2D_leftNormal(&axis, edge);
-        vector2D_normalize(&axis);
+            vector2D_leftNormal(&axis, edge);
+            vector2D_normalize(&axis);
+        }
+        else
+        {
+            axis = polyA.normals[i];
+        }
         
         projectPoly(&minA, &maxA, polyA, axis);
         projectPoly(&minB, &maxB, polyB, axis);
@@ -166,13 +187,20 @@ int collision_polyPoly(Vector2D *resolveDir, float *depth, Polygon polyA, Polygo
     }
     for (int i = 0; i < polyB.count; ++i)
     {
-        polyEdge(&edge, polyB, i);
+        if (polyB.normals == NULL)
+        {
+            polyEdge(&edge, polyB, i);
 
-        if (edge.x == 0 && edge.y == 0)
-            continue;
+            if (edge.x == 0 && edge.y == 0)
+                continue;
 
-        vector2D_leftNormal(&axis, edge);
-        vector2D_normalize(&axis);
+            vector2D_leftNormal(&axis, edge);
+            vector2D_normalize(&axis);
+        }
+        else
+        {
+            axis = polyB.normals[i];
+        }
         
         projectPoly(&minA, &maxA, polyA, axis);
         projectPoly(&minB, &maxB, polyB, axis);
@@ -216,12 +244,19 @@ int collision_circlePoly_check(Vector2D center, float radius, Polygon poly)
 
     for (int i = 0; i < poly.count; ++i)
     {
-        polyEdge(&edge, poly, i);
+        if (poly.normals == NULL)
+        {
+            polyEdge(&edge, poly, i);
 
-        if (edge.x == 0 && edge.y == 0)
-            continue;
+            if (edge.x == 0 && edge.y == 0)
+                continue;
 
-        vector2D_leftNormal(&axis, edge);
+            vector2D_leftNormal(&axis, edge);
+        }
+        else
+        {
+            axis = poly.normals[i];
+        }
         
         projectCircle(&minA, &maxA, center, radius, axis);
         projectPoly(&minB, &maxB, poly, axis);
@@ -260,13 +295,20 @@ int collision_circlePoly(Vector2D *resolveDir, float *depth, Vector2D center, fl
 
     for (int i = 0; i < poly.count; ++i)
     {
-        polyEdge(&edge, poly, i);
+        if (poly.normals == NULL)
+        {
+            polyEdge(&edge, poly, i);
 
-        if (edge.x == 0 && edge.y == 0)
-            continue;
+            if (edge.x == 0 && edge.y == 0)
+                continue;
 
-        vector2D_leftNormal(&axis, edge);
-        vector2D_normalize(&axis);
+            vector2D_leftNormal(&axis, edge);
+            vector2D_normalize(&axis);
+        }
+        else
+        {
+            axis = poly.normals[i];
+        }
         
         projectCircle(&minA, &maxA, center, radius, axis);
         projectPoly(&minB, &maxB, poly, axis);

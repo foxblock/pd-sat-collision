@@ -54,6 +54,7 @@ static int lua_polygon_new(lua_State *L)
             v->y = pd->lua->getArgFloat(i+1);
         }
     }
+    p->normals = NULL;
 
 	pd->lua->pushObject(p, POLY_TYPE_NAME, 0);
 	return 1;
@@ -63,6 +64,7 @@ static int lua_polygon_free(lua_State *L)
 {
 	Polygon* p = pd->lua->getArgObject(1, POLY_TYPE_NAME, NULL);
     pd->system->realloc(p->verts, 0);
+    pd->system->realloc(p->normals, 0);
 	pd->system->realloc(p, 0);
 	return 0;
 }
@@ -180,6 +182,32 @@ static int lua_polygon_boundingCircle(lua_State *L)
     return 2;
 }
 
+static int lua_polygon_cacheNormals(lua_State *L)
+{
+    Polygon* p = pd->lua->getArgObject(1, POLY_TYPE_NAME, NULL);
+
+    if (p->normals == NULL)
+        p->normals = pd->system->realloc(NULL, sizeof(Vector2D) * p->count);
+
+    for (int i = 0; i < p->count; ++i)
+    {
+        vector2D_dirNormalized(&p->normals[i], p->verts[(i + 1) % p->count], p->verts[i]);
+        vector2D_leftNormal(&p->normals[i], p->normals[i]);
+    }
+
+    return 0;
+}
+
+static int lua_polygon_clearNormals(lua_State *L)
+{
+    Polygon* p = pd->lua->getArgObject(1, POLY_TYPE_NAME, NULL);
+
+    pd->system->realloc(p->normals, 0);
+    p->normals = NULL;
+
+    return 0;
+}
+
 static const lua_reg polylib[] =
 {
 	{ "new", 		lua_polygon_new },
@@ -190,6 +218,8 @@ static const lua_reg polylib[] =
 	{ "set",		lua_polygon_set },
     { "addScaled",	lua_polygon_addScaled },
     { "getBoundingCircle", lua_polygon_boundingCircle },
+    { "cacheNormals", lua_polygon_cacheNormals },
+    { "clearNormals", lua_polygon_clearNormals },
 	{ NULL, NULL }
 };
 
