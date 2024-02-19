@@ -3,7 +3,7 @@
 
 [Separating Axis Theorem (SAT)](https://www.youtube.com/watch?v=Zgf1DYrmSnk&list=PLSlpr6o9vURwq3oxVZSimY8iC-cdd3kIs&index=7)-based 2D collision checking library for the [Playdate](https://play.date/).
 
-Code is written in C with performance in mind. You can use it in Lua using the provided hooks.
+Code is written in C with performance in mind. You can use it in Lua using the provided hooks. 
 
 ## Get started
 There is not much documentation right now, please take a look at the example project, to see how the code is used.

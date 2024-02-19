@@ -21,6 +21,8 @@ static void polygon_middle(Vector2D *dest, Polygon p)
     dest->y = sumY / p.count;
 }
 
+// --- LUA HOOKS ---
+
 static int lua_polygon_new(lua_State *L)
 {
     int argc = pd->lua->getArgCount();
@@ -157,7 +159,7 @@ static int lua_polygon_addScaled(lua_State *L)
     return 0;
 }
 
-static int lua_polygon_envelop(lua_State *L)
+static int lua_polygon_boundingCircle(lua_State *L)
 {
     Polygon* p = pd->lua->getArgObject(1, POLY_TYPE_NAME, NULL);
 
@@ -187,7 +189,7 @@ static const lua_reg polylib[] =
     { "__tostring",	lua_polygon_print },
 	{ "set",		lua_polygon_set },
     { "addScaled",	lua_polygon_addScaled },
-    { "getEnvelopCircle", lua_polygon_envelop },
+    { "getBoundingCircle", lua_polygon_boundingCircle },
 	{ NULL, NULL }
 };
 

@@ -6,6 +6,9 @@
 
 #define POLY_TYPE_NAME "collision.polygon"
 
+// TODO: Add C API
+// TODO: Cache normals of edges (cacheNormals, clearCache functions)
+
 typedef struct
 {
     int count;
