@@ -143,3 +143,64 @@ end
 ---
 
 playdate.display.setRefreshRate(50)
+
+local menu = playdate.getSystemMenu()
+
+local bechmarkItem, _ = menu:addMenuItem("Benchmark", function()
+    local count = #positions
+    for i=1, count do positions[i]=nil end
+    for i=1, count do velocities[i]=nil end
+
+    table.insert(positions, v2d.new(50,50))
+    table.insert(positions, v2d.new(260,50))
+    table.insert(positions, v2d.new(260,150))
+    table.insert(positions, v2d.new(50,150))
+    table.insert(positions, v2d.new(20,20))
+    table.insert(positions, v2d.new(80,30))
+    table.insert(positions, v2d.new(130,40))
+    table.insert(positions, v2d.new(200,50))
+    table.insert(positions, v2d.new(310,40))
+    table.insert(positions, v2d.new(370,30))
+    table.insert(positions, v2d.new(370,20))
+    table.insert(positions, v2d.new(70,100))
+    table.insert(positions, v2d.new(60,220))
+    table.insert(positions, v2d.new(280,20))
+    table.insert(positions, v2d.new(280,110))
+    table.insert(positions, v2d.new(280,210))
+    table.insert(positions, v2d.new(100,100))
+    table.insert(positions, v2d.new(200,200))
+    table.insert(positions, v2d.new(240,200))
+    table.insert(positions, v2d.new(160,200))
+
+    table.insert(velocities, v2d.new(3,1))
+    table.insert(velocities, v2d.new(-2,2))
+    table.insert(velocities, v2d.new(1,1))
+    table.insert(velocities, v2d.new(3,-2))
+    table.insert(velocities, v2d.new(4,-1))
+    table.insert(velocities, v2d.new(-1,-2))
+    table.insert(velocities, v2d.new(1,-2))
+    table.insert(velocities, v2d.new(-4,2))
+    table.insert(velocities, v2d.new(3,1))
+    table.insert(velocities, v2d.new(-2,3))
+    table.insert(velocities, v2d.new(-1,1))
+    table.insert(velocities, v2d.new(2,1))
+    table.insert(velocities, v2d.new(0.5,2))
+    table.insert(velocities, v2d.new(0.5,-1.5))
+    table.insert(velocities, v2d.new(1,0.75))
+    table.insert(velocities, v2d.new(1.75,-0.75))
+    table.insert(velocities, v2d.new(-3,-0.75))
+    table.insert(velocities, v2d.new(2,1))
+    table.insert(velocities, v2d.new(-2,2))
+    table.insert(velocities, v2d.new(1,2))
+
+    print("--- Starting benchmark...");
+    for i=1,3 do
+        local benchTime = playdate.getElapsedTime()
+        for k=1,100 do
+            playdate.update()
+        end
+        benchTime = playdate.getElapsedTime() - benchTime
+        print(string.format("Round %d: 100 frames in %.2fms", i, benchTime * 1000))
+    end
+    print("--- Benchmark finished")
+end)
