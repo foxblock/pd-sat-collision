@@ -137,14 +137,55 @@ static int lua_vector2d_newindex(lua_State *L)
 
 static int lua_vector2d_print(lua_State *L)
 {
- //   Vector2D* v = pd->lua->getArgObject(1, VECTOR_TYPE_NAME, NULL);
+    // This is bogus code, to test some weird performance oddities...
+    // It is never called from anywhere (and in fact should not be, because it returns >0 but never adds objects to the stack)
+    // Replacing all of this with just "return 0;" Decreases performance by 10% WTF
+    // Accessing the pd variable does not make a difference
 
- //   char result[64] = "";
- //   vector2D_print(result, sizeof(result), *v);
+    Vector2D x = { rand(), rand() };
+    Vector2D y = { rand(), rand() };
+    Vector2D* a = &x;//pd->lua->getArgObject(1, VECTOR_TYPE_NAME, NULL);
+    Vector2D* b = &y;//pd->lua->getArgObject(2, VECTOR_TYPE_NAME, NULL);
 
- //   pd->lua->pushString(result);
-    //return 1;
-    return 0;
+    float res = vector2D_dotProduct(*a, *b);
+    b->x = rand();
+    res += vector2D_dotProduct(*a, *b);
+    a->x = rand();
+    res += vector2D_dotProduct(*a, *b);
+    vector2D_addVecScaled(a, *b, rand());
+    b->x = rand();
+    res += vector2D_dotProduct(*a, *b);
+    vector2D_addVecScaled(a, *b, rand());
+    a->y = rand();
+    res += vector2D_dotProduct(*a, *b);
+    b->x = rand();
+    res += vector2D_dotProduct(*a, *b);
+    vector2D_addVecScaled(a, *b, rand());
+    b->y = rand();
+    res += vector2D_dotProduct(*a, *b);
+    vector2D_addVecScaled(a, *b, rand());
+    b->x = rand();
+    res += vector2D_dotProduct(*a, *b);
+    vector2D_addVecScaled(a, *b, rand());
+    a->y = rand();
+    res += vector2D_dotProduct(*a, *b);
+    b->x = rand();
+    res += vector2D_dotProduct(*a, *b);
+    vector2D_addVecScaled(a, *b, rand());
+    b->y = rand();
+    res += vector2D_dotProduct(*a, *b);
+    b->y = rand();
+    res += vector2D_dotProduct(*a, *b);
+    a->y = rand();
+    res += vector2D_dotProduct(*a, *b);
+    vector2D_addVecScaled(a, *b, rand());
+    b->x = rand();
+    res += vector2D_dotProduct(*a, *b);
+    vector2D_addVecScaled(a, *b, rand());
+
+    //pd->lua->pushFloat(res);
+    return (int)res;
+    //return 0;
 }
 
 static int lua_vector2d_op_lt_x(lua_State *L)
