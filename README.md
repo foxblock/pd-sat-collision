@@ -1,5 +1,5 @@
 # Collision checking library for Playdate
-![example](https://s9.gifyu.com/images/SFxNW.gif)
+![example](https://github.com/foxblock/pd-sat-collision/blob/main/media/playdate-20240218-144341.gif)
 
 [Separating Axis Theorem (SAT)](https://www.youtube.com/watch?v=Zgf1DYrmSnk&list=PLSlpr6o9vURwq3oxVZSimY8iC-cdd3kIs&index=7)-based 2D collision checking library for the [Playdate](https://play.date/).
 
