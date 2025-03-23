@@ -88,6 +88,7 @@ int collision_circleCircle(Vector2D *resolveDir, float *depth, Vector2D centerA,
     *depth = sqrtf(*depth);
     resolveDir->x = (centerB.x - centerA.x) / *depth;
     resolveDir->y = (centerB.y - centerA.y) / *depth;
+    *depth = radiusA + radiusB - *depth;
     return 1;
 }
 
@@ -356,18 +357,19 @@ static int lua_collision_circleCircle(lua_State *L)
 	Vector2D *centerB = pd->lua->getArgObject(3, VECTOR_TYPE_NAME, NULL);
 	float radiusB = pd->lua->getArgFloat(4);
 
-    float dist = square(centerA->x - centerB->x) + square(centerA->y - centerB->y);
-    if (dist >= square(radiusA + radiusB))
-        return 0;
-
     Vector2D *resolveDir = pd->system->realloc(NULL, sizeof(Vector2D));
+    float depth;
 
-    dist = sqrtf(dist);
-    resolveDir->x = (centerB->x - centerA->x) / dist;
-    resolveDir->y = (centerB->y - centerA->y) / dist;
+    int collides = collision_circleCircle(resolveDir, &depth, *centerA, radiusA, *centerB, radiusB);
+
+    if (!collides)
+    {
+        pd->system->realloc(resolveDir, 0);
+        return 0;
+    }
     
     pd->lua->pushObject(resolveDir, VECTOR_TYPE_NAME, 0);
-    pd->lua->pushFloat(radiusA + radiusB - dist);
+    pd->lua->pushFloat(depth);
 	return 2;
 }
 

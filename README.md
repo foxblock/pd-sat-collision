@@ -10,7 +10,7 @@ There is not much documentation right now, please take a look at the example pro
 
 You can use this library in a C- or Lua-based project. If you want to call into this library from Lua, some classes need to be registered. See main.c in the example project on how to do this.
 
-To build follow the steps in the original guide to compile the C code: [Inside Playdate with C](https://sdk.play.date/2.0.3/Inside%20Playdate%20with%20C.html#_prerequisites)
+To build follow the steps in the original guide to compile the C code: [Inside Playdate with C](https://sdk.play.date/2.6.2/Inside%20Playdate%20with%20C.html#_prerequisites)
 
 Windows users, who alreay have GCC, CMake and VisualStudio installed, may use the provided `setup_build.bat` to generate the VS solution file and build directories. [More info on that script.](https://github.com/foxblock/playdate-build-scripts)
 
